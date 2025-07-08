@@ -248,6 +248,15 @@
 .clock-box.breathing {          /* ⬅︎ NEW  */
   animation: breath 6s ease-in-out infinite;
 }
+
+@keyframes spinonce {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.clock.turning {
+  animation: spinonce 1s linear;
+}
   </style>
 </head>
 <body id="body">
@@ -317,7 +326,7 @@
   // Makes modes buttons 
   function genModes() {
     let modes = ["LAZY","FUN","WAVES","OFF","SPIN","RANDOM","RIPPLE","BREATH","COLUMN",
-             "W-RL","W-OUT","W-BOUNCE"]; 
+             "W-RL","W-OUT","W-BOUNCE","SPINSEQ"];
     let html = ""
     let i = 0
     for (let m of modes)
@@ -395,6 +404,31 @@ function setWavesBounce(time) {
     setTimeout(()=>{
       setDigit(d, digits[time.charAt(d)], 0, 15);
     }, 7000 + 9000 + 3500 + 400 * (d * 2 + 1));
+}
+
+/* COLUMN ─ выставляем цифры столбцами слева направо */
+function setColumnSeq(time) {
+  for (let d = 0; d < 4; d++)
+    setDigit(d, digit_II, 6, 8);
+
+  for (let d = 0; d < 4; d++)
+    setTimeout(()=>{
+      setDigit(d, digits[time.charAt(d)], 0, 15);
+    }, 7000 + 400 * (d + 1));
+}
+
+/* SPINSEQ — каждый час вращается по очереди */
+function setSpinSeq(time) {
+  setLazy(time); // сначала выставляем время
+  for (let i = 0; i < 24; i++) {
+    setTimeout(() => {
+      const el = document.querySelector(`.clock--${i}`);
+      if (el) {
+        el.classList.add('turning');
+        setTimeout(() => el.classList.remove('turning'), 1000);
+      }
+    }, 200 * i);
+  }
 }
 /* ------------------------------------------------------- */
 /* Дыхание: обычное lazy-установка + включение CSS-scale   */
@@ -906,7 +940,7 @@ function setRandom(time) {             // случайный путь за 15 с
     const hours = d.getHours()
     if (time !== lastTime && sleep[day][hours] === 0) {
       lastTime = time
-      switch(selectedMode) {
+  switch(selectedMode) {
         case 0:
           setLazy(lastTime)
           break;
@@ -916,14 +950,15 @@ function setRandom(time) {             // случайный путь за 15 с
         case 2:
           setWaves(lastTime)
           break;
-			case 4: setSpin(lastTime);   break;   // ← NEW
+                       case 4: setSpin(lastTime);   break;   // ← NEW
       case 5: setRandom(lastTime); break;
-			    case 6: setRipple(lastTime);   break;   // ⬅︎ NEW
+                            case 6: setRipple(lastTime);   break;   // ⬅︎ NEW
   case 7: setBreath(lastTime);   break;
-			   case 8:  setColumnSeq(lastTime); break;
-			    case 9:  setWavesRL(lastTime);   break;   // NEW
+                           case 8:  setColumnSeq(lastTime); break;
+                            case 9:  setWavesRL(lastTime);   break;   // NEW
   case 10: setWavesOut(lastTime);  break;   // NEW
   case 11: setWavesBounce(lastTime);break;
+      case 12: setSpinSeq(lastTime); break;  // NEW sequential spin
       }
     } else if (sleep[day][hours] === 1) {
       setStop()
