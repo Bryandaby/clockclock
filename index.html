@@ -278,13 +278,7 @@
   <input type="password" id="password" class="input-text" placeholder="PASSWORD" minlength="1" required/>
   <button type="submit" class="btn" style="width:100px" onclick="saveConnection()">SAVE</button>
 </form>
-<div class="spacer"></div>
-<div class="spacer"></div>
-<div class="text"> 
-  <p><small>Code</small><br/><a href="http://www.vallasc.github.com/">Giacomo Vallorani</a></p>
-  <p><small>Clock animation</small><br/><a href="https://manu.ninja/">Manuel Wieser</a></p>
-  <p><small>Design</small><br/><a href="http://www.humanssince1982.com/">Humans since 1982</a></p>
-</div>
+
 <script>
   // Hours when the clock remains off
   let sleep = [Array(24).fill(0), 
@@ -311,7 +305,7 @@
 
   // Returns a single clock HTML element
   function clock(index) {
-    return `<div id="clock-${index}" class="clock-box hidden"><svg class="clock clock--${index}" width="100" height="100" viewBox="0 0 100 100" onclick="selectClock(${index})"><path class="clock-smallHand" d="M50,47 C48.3431458,47 47,48.3431458 47,50 C47,51.6568542 48.3431458,53 50,53 L95,53 L95,47 L50,47 Z" stroke="none" fill="#FFF" fill-rule="evenodd"></path><path class="clock-largeHand" d="M50,47 C48.3431458,47 47,48.3431458 47,50 C47,51.6568542 48.3431458,53 50,53 L100,53 L100,47 L50,47 Z" stroke="none" fill="#FFF" fill-rule="evenodd"></path></svg><div class="btn-clock btn-clock-tl" onclick="adjustHand(${index}, 0, 1)">H+</div><div class="btn-clock btn-clock-tr" onclick="adjustHand(${index}, 1, 0)">M+</div><div class="btn-clock btn-clock-bl" onclick="adjustHand(${index}, 0, -1)">H-</div><div class="btn-clock btn-clock-br" onclick="adjustHand(${index}, -1, 0)">M-</div></div>`
+    return `<div id="clock-${index}" class="clock-box hidden"><svg class="clock clock--${index}" width="100" height="100"  viewBox="0 0 100 100" onclick="selectClock(${index})"><path class="clock-smallHand" stroke="#FFF" stroke-width="2" d="M50,47 C48.3431458,47 47,48.3431458 47,50 C47,51.6568542 48.3431458,53 50,53 L95,53 L95,47 L50,47 Z" fill="#FFF" fill-rule="evenodd"></path><path class="clock-largeHand" stroke="#FFF" stroke-width="2" d="M50,47 C48.3431458,47 47,48.3431458 47,50 C47,51.6568542 48.3431458,53 50,53 L100,53 L100,47 L50,47 Z" stroke="none" fill="#FFF" fill-rule="evenodd"></path></svg><div class="btn-clock btn-clock-tl" onclick="adjustHand(${index}, 0, 1)">H+</div><div class="btn-clock btn-clock-tr" onclick="adjustHand(${index}, 1, 0)">M+</div><div class="btn-clock btn-clock-bl" onclick="adjustHand(${index}, 0, -1)">H-</div><div class="btn-clock btn-clock-br" onclick="adjustHand(${index}, -1, 0)">M-</div></div>`
   }
 
   // Makes modes buttons 
@@ -690,7 +684,7 @@ function setRandom(time) {             // случайный путь за 15 с
       [225, 225],
       [225, 225],
       [225, 225],
-      [270, 270],
+      [225, 270],
       [270, 90],
       [90, 90]
     ], [ /* 2 */
